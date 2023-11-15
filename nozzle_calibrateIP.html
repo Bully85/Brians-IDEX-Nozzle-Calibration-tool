@@ -103,6 +103,7 @@
       <div>
       <!-- Bild-Element für den MJPEG-Stream -->
       <img id="imageStream" src="" alt="video is loading">
+      </div>
     </div>
     <div>
       <label for="circle_size">Circle Diameter:
@@ -110,7 +111,10 @@
       </label>
       <button onclick="adjustCircle()" id="btn_circle">Adjust Circle</button>
       <label for="ip_address">IP Address:
-        <input type="text" id="ip_address" name="ip_address" value="192.168.3.121">
+        <input type="text" id="ip_address" name="ip_address" value="0.0.0.0">
+      </label>
+      <label for="port">Port:
+        <input type="text" id="port" name="port" value="80">
       </label>
       <label for="ip_path">Path (e.g., /live):
         <input type="text" id="ip_path" name="ip_path" value="/live">
@@ -136,10 +140,12 @@
 
     function updateImage() {
         var ipAddress = document.getElementById("ip_address").value;
+        var port = document.getElementById("port").value;
         var ipPath = document.getElementById("ip_path").value;
         
         if (isValidIPAddress(ipAddress)) {
-          imageElement.src = "http://" + ipAddress + ipPath + "?timestamp=" + new Date().getTime();
+          var imageUrl = "http://" + ipAddress + ":" + port + ipPath + "?timestamp=" + new Date().getTime();
+          imageElement.src = imageUrl;
           setTimeout(updateImage, 1000); // Aktualisieren alle 1000 ms (1 Sekunde)
         } else {
           alert("Ungültige IP-Adresse!");
