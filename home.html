@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Übereinanderliegende Seiten</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: auto; /* Set overflow to auto or scroll */
+            display: flex;
+            flex-direction: column;
+            background-color: #333; /* Anthrazit Hintergrundfarbe */
+            color: white; /* Textfarbe auf Weiß */
+        }
+
+        iframe {
+            border: none;
+            width: 100%; /* Set the width to 100% for the first iframe */
+            height: 600px;
+        }
+
+        #secondIframeContainer {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        #iframeLeft,
+        #iframeRight {
+            height: 300px;
+        }
+        
+        #iframeLeft {
+            width: 35%;
+        }
+
+        #iframeRight {
+            width: 65%;
+        }
+
+        #ipInputContainer {
+            text-align: center;
+            margin: 10px;
+        }
+
+        input {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="ipInputContainer">
+        <label for="leftIP">Webcam IP:</label>
+        <input type="text" id="leftIP" placeholder="Geben Sie die Webcam IP ein">
+        <label for="leftPath">Webcam Pfad (e.g., webcam/?action=stream):</label>
+        <input type="text" id="leftPath" placeholder="Geben Sie den Webcam Pfad ein">
+        <label for="rightIP">Klipper IP:</label>
+        <input type="text" id="rightIP" placeholder="Geben Sie die Klipper IP ein">
+        <button onclick="updateIframes()">Aktualisieren</button>
+    </div>
+
+    <!-- Erstes iFrame für Seite 1 -->
+    <iframe id="firstIframe" src="nozzle_calibrateIP.html" frameborder="0"></iframe>
+
+    <!-- Zweites iFrame für Seite 2, horizontal geteilt -->
+    <div id="secondIframeContainer">
+        <iframe id="iframeLeft" frameborder="0"></iframe>
+        <iframe id="iframeRight" frameborder="0"></iframe>
+    </div>
+
+    <script>
+        function updateIframes() {
+            var leftIP = document.getElementById("leftIP").value;
+            var leftPath = document.getElementById("leftPath").value;
+            var rightIP = document.getElementById("rightIP").value;
+
+            document.getElementById("iframeLeft").src = "http://" + leftIP + "/" + leftPath;
+            document.getElementById("iframeRight").src = "http://" + rightIP;
+        }
+    </script>
+</body>
+</html>
+
+
+
